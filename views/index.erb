@@ -1,0 +1,25 @@
+<html>
+  <head> 
+    <title>VNA Measurements</title>
+    <meta charset="utf-8" />
+  </head> 
+  <body>
+    <form action="/" method="post" enctype="multipart/form-data">
+      <div class="field">
+        <label for="file">Upload File</label>
+        <input type="file" name="file" />
+      </div>
+      
+      <div class="actions">
+        <input type="submit" value="Parse" />
+      </div>
+    </form>
+    <%= params[:file][:filename] if !params[:file].nil? %>
+    
+    <% if @file %>
+      <% @f.each do |line| %>
+        <%= "#{line}<br>" %>
+      <% end %>
+    <% end %>
+  </body>
+</html>

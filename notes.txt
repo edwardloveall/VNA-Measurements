@@ -1,0 +1,8 @@
+S11: columns 1,2,3
+S21: columns 1,4,5
+S12: columns 1,6,7
+S22: columns 1,8,9
+
+1st column is frequency
+2nd is magnitude
+3rd is phase
