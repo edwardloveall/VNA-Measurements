@@ -4,6 +4,37 @@ get '/' do
   erb :index
 end
 
+post '/' do # after form submit
+  @file_collection = Array.new
+  @file_string = ''
+  
+  @error = "No file selected" if params.empty?
+  
+  params.each do |file|
+    next if file[1][:filename].nil?
+    
+    deal_with_file(file)
+  end
+  
+  erb :results
+end
+
+def deal_with_file(file)
+  unless file[1] &&                       ## check if file was uploaded
+         (tmpfile = file[1][:tempfile]) &&
+         (file_name = file[1][:filename])
+    
+    return erb :index # go back to the index if it can't use that file
+  end
+  
+  while blk = tmpfile.read(65536) # read the file
+    @file_string << blk           # put it into this string
+  end
+  
+  parser = Parser.new                        # new parser
+  parser.parse_file(@file_string, file_name) # run the parser
+end
+
 class Parser
   def which_columns(array, col)
     columns = {
@@ -16,47 +47,21 @@ class Parser
     true if columns[array].include?(col)
   end
   
-  def parse_file(file_name)
-    parsed = []
+  def parse_file(file_contents, file_name)
+    skip = 9 # number of lines to skip at the start (not zero indexed)
     
-    # file_name = ARGV[0]
-    data_prefix = file_name.gsub(/_.+$/, "") # strip everything but the first part
-    no_ext = file_name.gsub(/\..+$/, "") # no extention
-    ext = file_name.gsub(/^.+\./, "") # just the extention
+    data_prefix = file_name.gsub(/_.+$/, "")  # strip everything but the first part
 
-    file = File.open("public/#{file_name}", 'r')
-    out_file = File.open("public/#{no_ext}_out.#{ext}", 'w')
-    file.each do |line|
-      next if file.lineno <= 9 # skip the first 9 lines
+    file_contents.split("\n").each_with_index do |line, i|  # split by new line
+      next if i < skip                                      # skip the first 9 lines
   
-      out_row = [] # new array for data
+      out_row = []                                          # new array for columns
   
-      line.split(' ').each_with_index do |datum, i|
-        out_row << datum if which_columns(data_prefix, i+1)
+      line.split(' ').each_with_index do |datum, j|         # split by column
+        out_row << datum if which_columns(data_prefix, j+1) # only add the proper columns to the array
       end
-  
-      # out_file.write(out_row.join(' '))
-      # out_file.write("\n")
-      
-      parsed << out_row.join(" ")
-    end # file.each do |line|
-    
-    parsed
+      @file_collection[i - skip] << out_row.join(",")
+    end # file_contents.split("\n")
   end # parse_file()
+  
 end # Parser
-
-def test
-  p "columns"
-end
-
-post '/' do
-  # unless params[:file] && (tmpfile = params[:file][:tempfile]) && (name = params[:file][:filename])
-    # return haml(:index)
-  # end
-  file_name = params[:file][:filename]
-  
-  p = Parser.new
-  @f = p.parse_file(file_name)
-  
-  erb :index
-end

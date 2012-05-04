@@ -1,0 +1,14 @@
+<html>
+  <head> 
+    <title>VNA Measurements</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <% if @error %>
+      <div class="error">
+        <%= @error %>
+      </div>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>
