@@ -6,7 +6,6 @@ end
 
 post '/' do # after form submit
   @file_collection = Array.new
-  @file_string = ''
   
   @error = "No file selected" if params.empty?
   
@@ -16,10 +15,17 @@ post '/' do # after form submit
     deal_with_file(file)
   end
   
+  @all = combine_files(@file_collection)
+  # @all.each_with_index do |x, i|
+  #   @all[i] = x.join(",")
+  # end
+  
   erb :results
 end
 
 def deal_with_file(file)
+  file_string = '' # empty string for file
+  
   unless file[1] &&                       ## check if file was uploaded
          (tmpfile = file[1][:tempfile]) &&
          (file_name = file[1][:filename])
@@ -28,11 +34,28 @@ def deal_with_file(file)
   end
   
   while blk = tmpfile.read(65536) # read the file
-    @file_string << blk           # put it into this string
+    file_string << blk           # put it into this string
   end
   
-  parser = Parser.new                        # new parser
-  parser.parse_file(@file_string, file_name) # run the parser
+  parser = Parser.new                                            # new parser
+  @file_collection << parser.parse_file(file_string, file_name) # run the parser
+end
+
+def combine_files(file_array)
+  combined_files = []
+  
+  file_array.each do |file|
+    file.each_with_index do |line, i|
+      combined_files[i] = [] if combined_files[i].class != Array
+      combined_files[i] += line
+    end
+  end
+  
+  combined_files.each_with_index do |row, i|
+    combined_files[i] = row.join(",")
+  end
+  
+  combined_files
 end
 
 class Parser
@@ -48,9 +71,9 @@ class Parser
   end
   
   def parse_file(file_contents, file_name)
-    skip = 9 # number of lines to skip at the start (not zero indexed)
-    
-    data_prefix = file_name.gsub(/_.+$/, "")  # strip everything but the first part
+    skip = 9                                  # number of lines to skip at the start
+    row_collection = []                       # for all of the row data
+    data_prefix = file_name.gsub(/_.+$/, "")  # strip everything but the first part: S11, S21, etc
 
     file_contents.split("\n").each_with_index do |line, i|  # split by new line
       next if i < skip                                      # skip the first 9 lines
@@ -60,8 +83,10 @@ class Parser
       line.split(' ').each_with_index do |datum, j|         # split by column
         out_row << datum if which_columns(data_prefix, j+1) # only add the proper columns to the array
       end
-      @file_collection[i - skip] << out_row.join(",")
+      # row_collection[i - skip] = []
+      row_collection << out_row
     end # file_contents.split("\n")
+    row_collection
   end # parse_file()
   
 end # Parser
