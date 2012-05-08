@@ -1,2 +1,2 @@
-require './script.rb'
+require './script'
 run Sinatra::Application
