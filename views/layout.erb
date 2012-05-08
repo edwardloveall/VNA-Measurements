@@ -2,13 +2,22 @@
   <head> 
     <title>VNA Measurements</title>
     <meta charset="utf-8" />
+    <script src="/js/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/results.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="/css/style.css" type="text/css" media="screen" title="no title" charset="utf-8" />
   </head>
   <body>
-    <% if @error %>
-      <div class="error">
-        <%= @error %>
-      </div>
-    <% end %>
-    <%= yield %>
+    <div id="page_wrap">
+      <header>VNA Measurements</header>
+      <% if @error %>
+        <div class="error">
+          <%= @error %>
+        </div>
+      <% end %>
+      <%= yield %>
+    </div>
+    <footer>
+      Made with love by <a href="http://edwardloveall.com" target="_blank">Edward Loveall</a> in 2012
+    </footer>
   </body>
 </html>

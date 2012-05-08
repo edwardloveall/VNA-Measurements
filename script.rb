@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'sinatra'
 
 get '/' do
@@ -9,9 +10,7 @@ post '/' do # after form submit
   
   @error = "No file selected" if params.empty?
   
-  params.each do |file|
-    next if file[1][:filename].nil?
-    
+  params[:files].each do |file|
     deal_with_file(file)
   end
   
@@ -26,9 +25,9 @@ end
 def deal_with_file(file)
   file_string = '' # empty string for file
   
-  unless file[1] &&                       ## check if file was uploaded
-         (tmpfile = file[1][:tempfile]) &&
-         (file_name = file[1][:filename])
+  unless file &&                       ## check if file was uploaded
+         (tmpfile = file[:tempfile]) &&
+         (file_name = file[:filename])
     
     return erb :index # go back to the index if it can't use that file
   end
@@ -52,7 +51,7 @@ def combine_files(file_array)
   end
   
   combined_files.each_with_index do |row, i|
-    combined_files[i] = row.join(",")
+    combined_files[i] = row.join("\t")
   end
   
   combined_files
@@ -74,6 +73,15 @@ class Parser
     skip = 9                                  # number of lines to skip at the start
     row_collection = []                       # for all of the row data
     data_prefix = file_name.gsub(/_.+$/, "")  # strip everything but the first part: S11, S21, etc
+    no_suffix = file_name.gsub(/\..+$/, "") # stip the file extension
+    
+    first_row = []
+    
+    (1..9).each do |col|
+      first_row << "#{no_suffix}[#{col}]" if which_columns(data_prefix, col)
+    end
+    
+    row_collection[0] = first_row
 
     file_contents.split("\n").each_with_index do |line, i|  # split by new line
       next if i < skip                                      # skip the first 9 lines

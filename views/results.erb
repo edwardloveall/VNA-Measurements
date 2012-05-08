@@ -1,5 +1,9 @@
-<div class="file">
-  <% @all.each do |line| %>
-  <%= "#{line}<br>" %>
-  <% end %>
+<div id="results_wrap">
+  <div id="screen_top"></div>
+  <div id="results">
+    <% @all.each do |line| %>
+    <%= "#{line}<br>" %>
+    <% end %>
+  </div>
+  <div id="screen_bottom"></div>
 </div>

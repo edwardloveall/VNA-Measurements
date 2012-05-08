@@ -1,0 +1,163 @@
+@import url(http://fonts.googleapis.com/css?family=Press+Start+2P);
+@import url(http://fonts.googleapis.com/css?family=VT323);
+
+* {
+  padding: 0;
+  margin: 0;
+  outline: none;
+  border: none;
+  font: none;
+}
+
+html, body {
+  height: 100% !important;
+}
+
+body {
+  background: #dd9545 url(/images/sunset.jpg) repeat-x 0 100px;
+  font: 16px 'Press Start 2P', Helvetica, sans-serif;
+}
+
+header {
+  font-size: 30px;
+  padding: 35px;
+  background: #333;
+  text-align: center;
+  color: white;
+}
+
+#results {
+  font: 10px Courier, monospace;
+  background: transparent url(/images/screen_repeat.png) repeat-y;
+  padding: 0 50px;
+  color: #2e331f;
+}
+
+#page_wrap {
+  padding-bottom: 54px;
+  min-height: 100%;
+}
+
+#drop_wrap, #results_wrap {
+  margin: 100px auto;
+  width: 601px;
+  box-shadow: 0 0 100px #383838;
+  border-radius: 41px;
+}
+
+#screen_top {
+  background: transparent url(/images/screen_top.png) no-repeat;
+  height: 50px;
+}
+
+#drop {
+  position: relative;
+  padding-top: 20px;
+  background: transparent url(/images/screen_repeat.png) repeat-y;
+}
+
+#screen_bottom {
+  background: transparent url(/images/screen_bottom.png) no-repeat;
+  height: 66px;
+}
+
+#reflection {
+  background: transparent url(/images/reflection.png) no-repeat center top;
+  position: absolute;
+  top: -50px;
+  left: 0;
+  width: 100%;
+  height: 221px;
+}
+
+#drop form {
+  width: 300px;
+  margin: 0 auto;
+}
+
+ul {
+  list-style: inside url(/images/document-add.png);
+  padding-bottom: 1em;
+}
+
+ul li {
+  line-height: 1.2em;
+  margin: 10px 0 0px 0px;
+  padding: 4px 0 2px 10px;
+  border-radius: 4px;
+  font: 14px Courier, monospace;
+  border: 1px solid #3d471f;
+  color: #3d471f;
+}
+
+#file_select_button, .actions input {
+  font-size: 22px;
+  padding: 10px;
+  box-sizing: border-box;
+  width: 300px;
+  text-align: center;
+  color: #91a06b;
+  overflow: hidden;
+  border: 3px solid #3d471f;
+  background: #3d471f;
+}
+
+#file_select_button {
+  position: relative;
+}
+
+#file_select_button:active, .actions input:active {
+  color: #3d471f;
+  background: transparent;
+}
+
+#file_upload {
+  opacity: 0;
+  z-index: 10;
+  position: absolute;
+  -moz-opacity: .0;
+  top: 0;
+  left: 0;
+  padding: 30px;
+  width: 500px;
+  height: 500px;
+  cursor: pointer;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    box-shadow: 0px 0px 10px 3px #3d471f;
+  }
+  50% {
+    box-shadow: 0px 0px 2px 3px rgba(46, 51, 51, 0);
+  }
+  100% {
+    box-shadow: 0px 0px 10px 3px #3d471f;
+  }
+}
+
+.actions {
+  margin-bottom: 0;
+}
+
+.actions input {
+  display: none;
+  font-family: 'Press Start 2P';
+  -webkit-animation: pulse 5s infinite;
+}
+
+footer {
+  clear: both;
+  text-align: center;
+  padding: 20px 0;
+  background: #333;
+  color: #888;
+  text-rendering: optimizeLegibility;
+  font-size: 14px;
+  margin-top: -54px;
+}
+
+footer a {
+  color: inherit;
+  text-decoration: none;
+}
