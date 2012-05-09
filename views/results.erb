@@ -1,6 +1,7 @@
 <div id="results_wrap">
   <div id="screen_top"></div>
   <div id="results">
+    <a id="download" href="<%= @file.path %>">Download</a>
     <% @all.each do |line| %>
     <%= "#{line}<br>" %>
     <% end %>

@@ -90,7 +90,7 @@ ul li {
   color: #3d471f;
 }
 
-#file_select_button, .actions input {
+#file_select_button, .actions input, a#download {
   font-size: 22px;
   padding: 10px;
   box-sizing: border-box;
@@ -106,7 +106,7 @@ ul li {
   position: relative;
 }
 
-#file_select_button:active, .actions input:active {
+#file_select_button:active, .actions input:active, a#download:active {
   color: #3d471f;
   background: transparent;
 }
@@ -144,6 +144,13 @@ ul li {
   display: none;
   font-family: 'Press Start 2P';
   -webkit-animation: pulse 5s infinite;
+}
+
+a#download {
+  text-decoration: none;
+  display: block;
+  margin: 0 auto 1em;
+  font-family: 'Press Start 2P';
 }
 
 footer {

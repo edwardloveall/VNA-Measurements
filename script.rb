@@ -19,6 +19,8 @@ post '/' do # after form submit
   #   @all[i] = x.join(",")
   # end
   
+  @file = create_file(@all)
+  
   erb :results
 end
 
@@ -51,7 +53,7 @@ def combine_files(file_array)
   end
   
   combined_files.each_with_index do |row, i|
-    combined_files[i] = row.join("\t")
+    combined_files[i] = row.join("," ) # delimiter
   end
   
   combined_files
@@ -98,3 +100,19 @@ class Parser
   end # parse_file()
   
 end # Parser
+
+def create_file(text)
+  t = Time.now
+  file_name = "./public/tmp/result#{t.strftime('%H%M%S')}.csv"
+  f = File.open(file_name, 'w') do |file|
+    file << text
+  end
+  
+  p "Added file #{file_name}"
+  f # return the file
+end
+
+get '/public/tmp/:file' do
+  file_name ="./public/tmp/#{params[:file]}"
+  send_file(file_name, :filename => file_name)
+end
