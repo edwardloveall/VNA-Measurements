@@ -1,1 +1,2 @@
-gem "sinatra", "~> 1.3.2"
+source :rubygems
+gem "sinatra"
