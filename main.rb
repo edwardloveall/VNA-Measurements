@@ -6,9 +6,12 @@ get '/' do
 end
 
 post '/' do # after form submit
-  content_type 'application/octet-stream'
-  attachment("test.csv")
+  t = Time.now
+  file_name = "VNA_#{t.strftime('%Y%m%d')}.csv"
   @file_collection = Array.new
+  
+  content_type 'application/octet-stream'
+  attachment(file_name)
   
   params[:files].each do |file_each|
     file = Array.new
@@ -85,6 +88,7 @@ def combine_files(file_array)
   #   combined_files[i] = row.join(",") # delimiter
   # end
   
+  # turn array into a string of text
   combined_files.each_with_index do |row, i|
     file_string += row.join(",") + "\n"
   end

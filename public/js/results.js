@@ -39,11 +39,11 @@ function read_files (event) {
   }
   
   for (var i=0; i < file_list.length; i++) {
-    // file_list[i];
+    console.log(file_list[i].name);
     
     var file = document.createElement('li');
     if (!moz) { file.innerText   = file_list[i].fileName; }  // Webkit
-    else      { file.textContent = file_list[i].fileName; }; // mozilla
+    else      { file.textContent = file_list[i].name; };     // Mozilla
     
     files_div.appendChild(file)
   }

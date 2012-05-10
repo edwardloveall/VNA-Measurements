@@ -1,5 +1,4 @@
 @import url(http://fonts.googleapis.com/css?family=Press+Start+2P);
-@import url(http://fonts.googleapis.com/css?family=VT323);
 
 * {
   padding: 0;
@@ -26,19 +25,12 @@ header {
   color: white;
 }
 
-#results {
-  font: 10px Courier, monospace;
-  background: transparent url(/images/screen_repeat.png) repeat-y;
-  padding: 0 50px;
-  color: #2e331f;
-}
-
 #page_wrap {
   padding-bottom: 54px;
   min-height: 100%;
 }
 
-#drop_wrap, #results_wrap {
+#drop_wrap {
   margin: 100px auto;
   width: 601px;
   box-shadow: 0 0 100px #383838;
@@ -90,7 +82,7 @@ ul li {
   color: #3d471f;
 }
 
-#file_select_button, .actions input, a#download {
+#file_select_button, .actions input {
   font-size: 22px;
   padding: 10px;
   box-sizing: border-box;
@@ -106,16 +98,16 @@ ul li {
   position: relative;
 }
 
-#file_select_button:active, .actions input:active, a#download:active {
+#file_select_button:active, .actions input:active {
   color: #3d471f;
   background: transparent;
 }
 
 #file_upload {
   opacity: 0;
+  -moz-opacity: .0;
   z-index: 10;
   position: absolute;
-  -moz-opacity: .0;
   top: 0;
   left: 0;
   padding: 30px;
@@ -126,24 +118,29 @@ ul li {
 
 @-webkit-keyframes pulse {
   0% {
-    box-shadow: 0px 0px 10px 3px #3d471f;
+    background: #3d471f;
+    color: #91a06b;
   }
   50% {
-    box-shadow: 0px 0px 2px 3px rgba(46, 51, 51, 0);
+    background: transparent;
+    color: #3d471f;
   }
   100% {
-    box-shadow: 0px 0px 10px 3px #3d471f;
+    background: #3d471f;
+    color: #91a06b;
   }
 }
 
 .actions {
   margin-bottom: 0;
+  position: relative;
+  z-index: 10;
 }
 
 .actions input {
   display: none;
   font-family: 'Press Start 2P';
-  -webkit-animation: pulse 5s infinite;
+  -webkit-animation: pulse 1s infinite step-start;
 }
 
 a#download {
