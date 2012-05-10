@@ -1,2 +1,2 @@
-require './script'
+require './main'
 run Sinatra::Application
